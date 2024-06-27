@@ -1,0 +1,27 @@
+# framework:
+#     messenger:
+#         transports:
+#             async: "%env(MESSENGER_TRANSPORT_DSN)%" # Xử lý tin không đồng bộ
+#             sync: 'sync://' # Xử lý tin nhắn đồng bộ
+        # routing:
+        #     'CorepulseCacheBundle\Message\ExecuteCacheMessage': [async, sync] # async hoặc sync  
+flysystem:
+    storages:
+        pimcore.corepulse_cache.storage:
+            # Storage for generated static document pages, e.g. .html files generated out of Pimcore documents
+            # which are then delivered directly by the web-server
+            adapter: 'local'
+            visibility: public
+            directory_visibility: public
+            options:
+                directory: '%kernel.project_dir%/public/var/tmp/cpcache'
+
+        # pimcore.corepulse_cache_s3.storage:
+        #     # Storage for generated static document pages, e.g. .html files generated out of Pimcore documents
+        #     # which are then delivered directly by the web-server
+        #     adapter: 'aws'
+        #     visibility: public
+        #     options:
+        #         client: 'assets_s3'
+        #         bucket: 'bucket'
+        #         prefix: cpcache

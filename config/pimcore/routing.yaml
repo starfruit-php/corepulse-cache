@@ -1,0 +1,6 @@
+corepulse_cache:
+    resource: "../../src/Controller/"
+    type:     annotation
+    prefix: '/admin/corepulse-cache'
+    options:
+        expose: true

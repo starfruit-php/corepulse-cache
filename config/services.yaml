@@ -1,0 +1,60 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    CorepulseCacheBundle\Controller\:
+        resource: '../src/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    CorepulseCacheBundle\Model\:
+        resource: '../src/Model'
+        public: true
+
+    CorepulseCacheBundle\Installer:
+        public: true
+        arguments:
+            $bundle: "@=service('kernel').getBundle('PimcoreAdminBundle')"
+
+    CorepulseCacheBundle\Message\:
+        resource: '../src/Message'
+        public: true
+
+    CorepulseCacheBundle\EventSubscriber\:
+        resource: '../src/EventSubscriber'
+        public: true
+
+    CorepulseCacheBundle\Message\Handler\:
+        resource: '../src/Message/Handler'
+        tags:
+            - { name: messenger.message_handler }
+
+    CorepulseCacheBundle\Cache: ~
+
+    assets_s3:
+        class: 'Aws\S3\S3Client'
+        arguments:
+            -  endpoint: 'https://minio.panoee.com' 
+
+               region: 'ap-southeast-1'
+               version: 'latest'
+               credentials:
+                   key: '%env(S3_STORAGE_KEY)%'
+                   secret: '%env(S3_STORAGE_SECRET)%'
+               use_path_style_endpoint: true
+
+# add more services, or override services that need manual wiring
+#    CorepulseCacheBundle\ExampleClass:
+#        arguments:
+#            - "@service_id"
+#            - "plain_value"
+#            - "%parameter%"
