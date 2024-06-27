@@ -1,0 +1,34 @@
+{
+    "name": "corepulse/static-cache",
+    "description": "corepulse static cache",
+    "type": "pimcore-bundle",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "khanh",
+            "email": "khanhln.c1003j@gmail.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "preferred-install": {
+            "pimcore/pimcore": "source",
+            "*": "dist"
+        }
+    },
+    "require": {
+        "pimcore/pimcore": ">=11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CorepulseCacheBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "pimcore": {
+            "bundles": [
+                "CorepulseCacheBundle\\CorepulseCacheBundle"
+            ] 
+        }
+    }
+}
